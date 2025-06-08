@@ -2,28 +2,78 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Quiz mit Buzzer & Punkte</title>
+  <title>Quiz Show – Buzzer & Punkte (PietSmiet-Style)</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background: #f2f2f2; }
-    h1 { text-align: center; }
-    .players { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-bottom: 20px; }
-    .player { background: white; padding: 10px; border-radius: 10px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); text-align: center; }
-    .player h2 { font-size: 1.2em; margin: 5px 0; }
-    .buzzer { font-size: 1.2em; padding: 10px; margin: 5px 0; border-radius: 5px; border: none; cursor: pointer; background: #4CAF50; color: white; }
-    .buzzer:active { background: #388E3C; }
-    .points { font-size: 1.5em; margin-top: 10px; }
-    .controls { margin-top: 10px; }
-    .controls button { margin: 0 2px; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #1e1e1e;
+      color: #fff;
+    }
+    header {
+      background: #111;
+      padding: 20px;
+      text-align: center;
+      font-size: 2em;
+      border-bottom: 4px solid #444;
+    }
+    .players {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    .player {
+      background: #2a2a2a;
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .player h2 {
+      font-size: 1.4em;
+      margin-bottom: 10px;
+    }
+    .buzzer {
+      background: #d32f2f;
+      color: white;
+      font-size: 1.2em;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .buzzer:hover {
+      background: #c62828;
+    }
+    .points {
+      font-size: 1.8em;
+      margin-bottom: 10px;
+    }
+    .controls button {
+      background: #4caf50;
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      font-size: 1em;
+      border-radius: 5px;
+      margin: 0 4px;
+      cursor: pointer;
+    }
+    .controls button:hover {
+      background: #43a047;
+    }
   </style>
 </head>
 <body>
-  <h1>Quiz mit Buzzer & Punkte</h1>
+  <header>🎤 Quiz Show – Buzzer & Punkte</header>
   <div class="players" id="players"></div>
 
   <script>
     const numPlayers = 10;
     const playersContainer = document.getElementById("players");
-
     const players = [];
 
     for (let i = 1; i <= numPlayers; i++) {
@@ -39,7 +89,7 @@
       playerDiv.innerHTML = `
         <h2>${player.name}</h2>
         <button class="buzzer" onclick="buzz(${i})">🔔 Buzz!</button>
-        <div class="points" id="points-${i}">0 Punkte</div>
+        <div class="points" id="points-${i}">${player.points} Punkte</div>
         <div class="controls">
           <button onclick="changePoints(${i}, 1)">+1</button>
           <button onclick="changePoints(${i}, -1)">-1</button>
