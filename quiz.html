@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz mit Buzzer & Punkte</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f2f2f2; }
+    h1 { text-align: center; }
+    .players { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-bottom: 20px; }
+    .player { background: white; padding: 10px; border-radius: 10px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); text-align: center; }
+    .player h2 { font-size: 1.2em; margin: 5px 0; }
+    .buzzer { font-size: 1.2em; padding: 10px; margin: 5px 0; border-radius: 5px; border: none; cursor: pointer; background: #4CAF50; color: white; }
+    .buzzer:active { background: #388E3C; }
+    .points { font-size: 1.5em; margin-top: 10px; }
+    .controls { margin-top: 10px; }
+    .controls button { margin: 0 2px; }
+  </style>
+</head>
+<body>
+  <h1>Quiz mit Buzzer & Punkte</h1>
+  <div class="players" id="players"></div>
+
+  <script>
+    const numPlayers = 10;
+    const playersContainer = document.getElementById("players");
+
+    const players = [];
+
+    for (let i = 1; i <= numPlayers; i++) {
+      console.log(`Erstelle Spieler ${i}`);
+      const player = {
+        id: i,
+        name: `Spieler ${i}`,
+        points: 0
+      };
+
+      const playerDiv = document.createElement("div");
+      playerDiv.className = "player";
+      playerDiv.innerHTML = `
+        <h2>${player.name}</h2>
+        <button class="buzzer" onclick="buzz(${i})">🔔 Buzz!</button>
+        <div class="points" id="points-${i}">0 Punkte</div>
+        <div class="controls">
+          <button onclick="changePoints(${i}, 1)">+1</button>
+          <button onclick="changePoints(${i}, -1)">-1</button>
+        </div>
+      `;
+
+      playersContainer.appendChild(playerDiv);
+      players.push(player);
+      console.log(`Spieler hinzugefügt:`, player);
+    }
+
+    function buzz(id) {
+      console.log(`Buzz von Spieler ${id}`);
+      alert(`🎉 ${players[id - 1].name} hat gebuzzert!`);
+    }
+
+    function changePoints(id, delta) {
+      console.log(`Ändere Punkte für Spieler ${id} um ${delta}`);
+      const player = players.find(p => p.id === id);
+      if (!player) {
+        console.error(`Spieler ${id} nicht gefunden!`);
+        return;
+      }
+      player.points += delta;
+      document.getElementById(`points-${id}`).innerText = `${player.points} Punkte`;
+      console.log(`Neuer Punktestand von Spieler ${id}: ${player.points}`);
+    }
+  </script>
+</body>
+</html>
